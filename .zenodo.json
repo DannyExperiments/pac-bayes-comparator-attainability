@@ -1,0 +1,29 @@
+{
+  "title": "A strict gap for a common PAC-Bayes comparator",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "DannyExperiments"
+    }
+  ],
+  "keywords": [
+    "PAC-Bayes",
+    "convex comparator",
+    "binary relative entropy",
+    "binomial moment",
+    "generalization bounds"
+  ],
+  "description": "<p>One proper closed convex comparator in the generic PAC-Bayes theorem need not attain the pointwise optimistic PAC-Bayes-kl inversion in expectation. Two iid fair Bernoulli labels give a gap of at least (7 − √34)/80, even in the infimum. This answers universal attainability in Open Problem 1 of Foong, Bruinsma, Burt and Turner.</p><p>A data-dependent posterior gives two sample branches whose ideal inversions both equal 3/4. If both actual inversions were too close to that value, two terms of their common normalized binomial moment would exceed the budget of one. A fixed Catoni comparator gives the upper estimate 9/176 on this law. The ordinary KL comparator gives a distribution-free upper estimate. The exact gap and the validity of the optimistic formula by another high-probability argument remain separate questions.</p><p>Internally reviewed, not peer reviewed. Exact replay checks the finite probability law and rational arithmetic. A partial Lean certificate checks the moment polynomial and finite algebra, while the paper gives the analytical argument.</p><p>Under human direction, ChatGPT Astra 6.2 (OpenAI) generated the discovery proof and research packet. OpenAI Codex independently checked the mathematics. GPT-6.2 Sol (OpenAI) checked the literature and prepared the manuscript, partial Lean certificate and illustrations. DannyExperiments maintains the repository and is the preferred citation identity. No AI system is proposed as an author.</p><p>Release v1.0.0. https://github.com/DannyExperiments/pac-bayes-comparator-attainability/releases/tag/v1.0.0</p>",
+  "license": "other-closed",
+  "notes": "All rights reserved. Publicly downloadable files are supplied without a repository-wide reuse license.",
+  "publication_date": "2026-11-27",
+  "version": "1.0.0",
+  "access_right": "open",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/DannyExperiments/pac-bayes-comparator-attainability/releases/tag/v1.0.0",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}

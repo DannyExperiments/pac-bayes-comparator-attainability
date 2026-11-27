@@ -1,0 +1,7 @@
+'ComparatorGap.moment_polynomial' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ComparatorGap.sample_counts' does not depend on any axioms
+'ComparatorGap.rational_obstruction' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ComparatorGap.branch_thresholds' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ComparatorGap.stronger_discriminant' does not depend on any axioms
+'ComparatorGap.lower_margin' depends on axioms: [propext, Classical.choice, Quot.sound]
+'ComparatorGap.catoni_upper' depends on axioms: [propext, Classical.choice, Quot.sound]

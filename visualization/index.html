@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>PAC-Bayes moment budget</title>
+<style>
+:root{font:16px/1.5 system-ui,sans-serif;color-scheme:dark;color:#eef7ff;background:#0b1523}
+*{box-sizing:border-box}body{margin:0}
+main{max-width:48rem;margin:auto;padding:1.4rem clamp(1rem,4vw,2rem)}
+h1{font-size:clamp(1.55rem,5vw,2.35rem);line-height:1.13;margin:0 0 .55rem}
+h2{font-size:1.05rem;margin:.2rem 0}
+p{color:#c0d4e6;margin:.45rem 0 .85rem}
+.controls{display:grid;gap:.6rem;margin:1rem 0}
+.controls label{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+input[type="range"]{flex:1;min-width:5rem;accent-color:#76dfc7}
+output{min-width:6ch;text-align:right;font-variant-numeric:tabular-nums}
+.panels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem}
+article{background:#132338;border:1px solid #38516a;border-radius:.6rem;text-align:center;padding:.7rem}
+canvas{display:block;width:100%;height:auto;margin:auto}
+dl{margin:.5rem auto;display:grid;gap:.4rem}
+dt{font-weight:700}dd{margin:0;font-variant-numeric:tabular-nums}
+hr{height:1px;border:0;background:#38516a;margin:.65rem 0}
+.result{border-left:4px solid #ffce79;padding:.65rem .75rem;background:#132338;margin-top:1rem}
+.result p{margin:0}
+:focus-visible{outline:2px solid #ffce79;outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+<h1>A shared moment budget</h1>
+<p>Both sample branches have pointwise ideal 3/4. If both generically valid inversions are below a probe r, their first two moment terms must exceed the subtotal shown here.</p>
+<div class="controls">
+  <label for="probe">Probe r <input id="probe" type="range" min="750" max="860" value="800" step="1"><output id="r"></output></label>
+  <label for="angle">Rotate <input id="angle" type="range" min="9" max="49" value="26"></label>
+</div>
+<div class="panels">
+<article>
+  <h2>Budget = 1</h2>
+  <canvas id="stack" width="380" height="350" aria-label="Stack of the first two moment terms compared with a budget of one"></canvas>
+</article>
+<article aria-live="polite">
+  <h2>Required subtotal</h2>
+  <dl><dt style="color:#76dfc7">0-error term</dt><dd id="term0"></dd>
+      <dt style="color:#ffce79">1-error term</dt><dd id="term1"></dd></dl>
+  <hr><strong id="sum"></strong>
+</article>
+</div>
+<div class="result" aria-live="polite"><h2 id="result"></h2><p id="detail"></p></div>
+<p>At r = 4/5, the exact subtotal is 16/15. The sharper witness uses the smaller root of subtotal = 1, which forces a positive expected gap even in the infimum.</p>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const corners=[[-.64,-.64],[.64,-.64],[.64,.64],[-.64,.64]];
+function draw() {
+  const r=Number($("probe").value)/1000;
+  const a=16*(1-r)**2,b=(8/3)*r*(1-r);
+  const total=a+b;
+  $("r").textContent=r.toFixed(3);
+  $("term0").textContent=a.toFixed(4);
+  $("term1").textContent=b.toFixed(4);
+  $("sum").textContent=total.toFixed(4);
+  const impossible=total>=1;
+  $("result").textContent=impossible ? "At least one inversion is at least r" : "The displayed subtotal fits within the budget";
+  $("detail").textContent=impossible ? "Both inversions below r would force a moment greater than 1." : "For this probe the two-term subtotal alone gives no contradiction.";
+  const turn=Number($("angle").value)*Math.PI/180;
+  const ctx=$("stack").getContext("2d");
+  ctx.clearRect(0,0,380,350);
+  const project=(x,y,z)=>[
+    190+125*(x*Math.cos(turn)+z*Math.sin(turn)),
+    294-146*y+42*(-x*Math.sin(turn)+z*Math.cos(turn))
+  ];
+  function face(vertices,fill,stroke) {
+    ctx.beginPath();
+    ctx.moveTo(...vertices[0]);
+    for(const v of vertices.slice(1)) ctx.lineTo(...v);
+    ctx.closePath();
+    if(fill){ctx.fillStyle=fill;ctx.fill();}
+    ctx.lineWidth=stroke==="#eff8fe"?4:2;
+    ctx.strokeStyle=stroke;ctx.stroke();
+  }
+  const bounds=[0,a,total],colors=[["#4ead9a","#76dfc7","#94f0db"],["#d7974f","#ffce79","#ffdf9b"]];
+  for(let i=0;i<2;i++){
+    const low=corners.map(([x,z])=>project(x,bounds[i],z));
+    const high=corners.map(([x,z])=>project(x,bounds[i+1],z));
+    face([low[0],low[3],high[3],high[0]],colors[i][1],"#0b1523");
+    face([low[3],low[2],high[2],high[3]],colors[i][0],"#0b1523");
+    face(high,colors[i][2],"#0b1523");
+  }
+  face(corners.map(([x,z])=>project(1.06*x,1,1.06*z)),null,"#eff8fe");
+}
+$("probe").addEventListener("input",draw);
+$("angle").addEventListener("input",draw);
+draw();
+</script>
+</body>
+</html>

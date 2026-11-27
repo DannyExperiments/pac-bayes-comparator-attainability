@@ -1,0 +1,195 @@
+\documentclass[11pt]{amsart}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1.02in]{geometry}
+\DeclareFontShape{OT1}{cmr}{bx}{n}{<-> cmbx10}{}
+\DeclareMathSizes{8}{8}{8}{8}
+\DeclareMathSizes{9}{9}{8}{8}
+\DeclareMathSizes{10.95}{10.95}{8}{8}
+\newtheorem{theorem}{Theorem}
+\newcommand{\kl}{\operatorname{kl}}
+\newcommand{\KL}{\operatorname{KL}}
+\newcommand{\Bin}{\operatorname{Bin}}
+\newcommand{\E}{\operatorname{\mathbb E}}
+\title{A strict gap for a common PAC-Bayes comparator}
+\date{November 27, 2026}
+\begin{document}
+\begin{abstract}
+The pointwise optimistic PAC-Bayes-kl inversion need not be
+attainable in expectation by one comparator. Two independent
+Bernoulli observations give a strict expectation gap of at least
+\((7-\sqrt{34})/80\) for every proper closed convex comparator in
+the generic theorem. The obstruction is a shared binomial moment
+budget across two possible samples. A fixed Catoni comparator
+bounds the gap from above by \(9/176\) on this instance. This
+answers the universal attainability part of Open Problem~1 of
+Foong, Bruinsma, Burt and Turner.
+\end{abstract}
+\maketitle
+
+\section{Setup and the pointwise floor}
+For \(N\) independent observations and a bounded loss in \([0,1]\),
+let \(q\) denote the posterior-averaged empirical risk. Write
+\(K=\KL(Q\Vert P)\) for posterior-to-prior divergence and
+\(a=(K+\log(1/\delta))/N\), with \(\delta\in(0,1)\).
+Foong et al.\ \cite[Theorem~3 and Eq.~(6)]{foong} state the
+generic PAC-Bayes inequality for a proper closed convex
+\(\Delta:[0,1]^2\to\mathbb R\cup\{+\infty\}\), chosen before
+sampling. Its moment factor and upper inversion are
+\[
+ I=\sup_{r\in[0,1]}\E_{B\sim\Bin(N,r)} e^{N\Delta(B/N,r)},
+ \qquad b_\Delta=\sup\{p\in[0,1]:\Delta(q,p)\le a+\log I/N\},
+\]
+with the empty sublevel set giving 1. A moment is taken over the
+support of the binomial law. Infinite \(I\) gives the vacuous
+bound 1. The pointwise ideal uses \(b_*=\sup\{p:\kl(q,p)\le a\}\),
+where \(\kl\) is Bernoulli relative entropy. Foong et al.\
+\cite[Open Problem~1]{foong} ask whether some one \(\Delta\)
+attains this floor in expectation for an arbitrary dataset law.
+
+With finite \(I\), the positive grid masses at interior \(r\)
+give \(I>0\). Normalize \(f=\Delta-\log I/N\), so
+\[
+            \E_{B\sim\Bin(N,r)} e^{Nf(B/N,r)}\le1.
+\]
+For a fixed interior \(p\), convexity in the first argument, followed
+by the finite change-of-measure inequality, gives
+\[
+\begin{split}
+ N f(q,p)&\le \E_{\Bin(N,q)} Nf(B/N,p)\\
+          &\le\log\E_{\Bin(N,p)} e^{Nf(B/N,p)}
+                   +\KL(\Bin(N,q)\Vert\Bin(N,p))
+          \le N\kl(q,p).
+\end{split}
+\]
+The second inequality follows by applying Jensen's inequality for
+the logarithm under the tilted law after dividing by its density
+relative to \(\Bin(N,p)\) on its support. It also holds when
+\(q=0\) or \(q=1\). Thus every interior point of the ideal
+sublevel set is admissible under \(f\), and approximation from
+inside \((0,1)\) gives \(b_\Delta\ge b_*\), including endpoint
+suprema. Indeed \(a>0\) ensures the ideal sublevel set contains
+interior points and its supremum is approachable through them.
+This recovers the pointwise comparison in \cite[Remark~2]{foong}.
+
+\section{A two-sample obstruction}
+\begin{theorem}
+There is a setup with two iid observations, two hypotheses and
+\(\delta=3/4\) for which
+\[
+  \frac{7-\sqrt{34}}{80}
+     \le \inf_{\Delta}\E (b_\Delta-b_*) \le \frac9{176}.
+\]
+In particular the ideal is unattainable even in the infimum.
+\end{theorem}
+
+\begin{proof}
+Take inputs supported at a single point and iid fair labels.
+Use zero-one loss and two hypotheses predicting zero at that
+point, with different predictions at another point of probability
+zero. Put prior mass \(1/12\) on the first hypothesis. The posterior
+puts all mass on it when both labels are zero, and equals the
+prior otherwise. All four ordered label samples are equally likely,
+and the induced values are
+\[
+\begin{array}{c|c|c|c}
+  q&K&\text{probability}&b_*\\ \hline
+  0&\log12&1/4&3/4\\
+  1/2&0&1/2&3/4\\
+  1&0&1/4&1
+\end{array}
+\]
+To see the first two inversions, the respective thresholds are
+\(a_0=\log4\) and \(a_1=\log(4/3)/2\), and at \(p=3/4\) the
+exponentiated doubled divergences are \(16\) and \(4/3\).
+The divergence is increasing on the upper branch \(p>q\).
+The \(q=1\) row always has \(b_\Delta=1\) by the pointwise floor.
+
+For finite \(I\), suppose that both generic inversions of the
+first two rows are strictly below an interior \(r\).
+Then \(f(0,r)>a_0\) and \(f(1/2,r)>a_1\), because otherwise \(r\)
+would be admissible in the corresponding row. The first two
+terms of the normalized binomial moment at \(r\) therefore have
+sum strictly greater than
+\[
+      L(r)=16(1-r)^2+\frac{8}{3}r(1-r).
+\]
+At \(r=4/5\), \(L(r)=16/15>1\), contradicting the moment bound.
+The same argument works at the smaller root of \(L(r)=1\),
+which lies between \(4/5\) and \(1\). In fact,
+\(3(L(r)-1)=40r^2-88r+45\), giving \(r=(22-\sqrt{34})/20\).
+Thus one of the two inversions is at least \(r\), and its row has
+probability at least \(1/4\). The pointwise floor precludes
+cancellation by the other rows. The gap is at least
+\((r-3/4)/4=(7-\sqrt{34})/80>1/80\).
+The same lower bound holds with the vacuous inversion for
+infinite \(I\).
+
+For the upper bound, take the Catoni comparator
+\[
+ C_\beta(q,p)=-\beta q-\log(1-p+p e^{-\beta}),\qquad \beta=\log12 .
+\]
+It is closed convex and its binomial moment equals 1 by the
+binomial generating function \cite[Corollary~1]{foong}.
+In the first two rows the inversion condition simplifies to
+\(1-11p/12\ge1/4\), giving \(9/11\) in both.
+The third row gives 1. The resulting expected excess is
+\((3/4)(9/11-3/4)=9/176\).
+\end{proof}
+
+\section{A distribution-free comparison}
+A direct upper bound follows from the ordinary \(\Delta=\kl\)
+choice. For interior \(r\), the binomial moment \(I_{\kl}\)
+is the sum over \(k=0,\ldots,N\) of the mass at \(k\) in
+\(\Bin(N,k/N)\), by cancelling the \(r\)-dependent factors.
+At the endpoints the moment is 1. Hence \(I_{\kl}\le N+1\).
+Sharper moment estimates are classical \cite[Corollary~2]{foong}.
+
+If \(b_*=1\), the excess is zero. Otherwise \(b_*\ge q\) and
+\(\kl(q,b_*)=a\). For interior \(p\ge b_*\), the derivative with
+respect to \(p\) satisfies
+\[
+      \frac{p-q}{p(1-p)}\ge 4(p-b_*).
+\]
+Integrating gives \(\kl(q,p)-\kl(q,b_*)\ge2(p-b_*)^2\), also
+at a boundary by limits. The ordinary KL inversion increases the
+level \(a\) by \(\log I_{\kl}/N\). Its excess over \(b_*\) is at most
+\(\sqrt{\log I_{\kl}/(2N)}\), uniformly in the data. In particular
+the best common comparator's expectation gap is at most
+\(\sqrt{\log(N+1)/(2N)}\) in every setup. The explicit example
+above does not determine the exact infimum.
+
+\section*{Scope, verification and technical disclosure}
+Theorem~4 of \cite{foong} optimizes for fixed \(q,K\), while
+Corollary~3 supplies a non-strict expectation floor. The
+numerical comparisons in their Figure~2(d) address the Catoni
+family. Hellstr\"om and Guedj \cite[Theorem~8]{hg} distinguish
+the moment-one benchmark from the valid bound retaining its
+moment factor. The obstruction here concerns the expectation
+of samplewise inversions for one comparator in the generic
+theorem. The validity of the optimistic high-probability bound
+by other means is a separate question.
+
+The Python replay checks the finite law and the exact moment
+arithmetic. A partial Lean~4 certificate checks the polynomial
+identity and rational threshold algebra. The analytical proof,
+including Jensen's inequality and the irrational root step,
+is written here. Internally reviewed, not peer reviewed.
+
+Under human direction, ChatGPT Astra~6.2 (OpenAI) generated the
+discovery proof and research packet. OpenAI Codex independently
+checked the mathematics. GPT-6.2 Sol (OpenAI) checked the
+literature and prepared the manuscript, partial Lean certificate
+and illustrations. DannyExperiments maintains the repository
+and is the preferred citation identity. No AI system is proposed
+as an author.
+
+\begin{thebibliography}{9}
+\raggedright
+\bibitem{foong} A. Y. K. Foong, W. P. Bruinsma, D. R. Burt and R. E. Turner,
+\emph{How tight can PAC-Bayes be in the small data regime?},
+Advances in Neural Information Processing Systems 34 (2021).
+\bibitem{hg} F. Hellstr\"om and B. Guedj,
+\emph{Comparing comparators in generalization bounds},
+Proc. AISTATS, PMLR 238 (2024), 73--81.
+\end{thebibliography}
+\end{document}

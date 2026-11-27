@@ -1,0 +1,1 @@
+PASS: all four sample outcomes, rational obstruction and gap, stronger-root algebra, Catoni upper bound.

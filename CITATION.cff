@@ -1,0 +1,18 @@
+cff-version: "1.2.0"
+message: "If you cite this release, please cite the version-specific DOI."
+title: "A strict gap for a common PAC-Bayes comparator"
+type: software
+authors:
+  - name: "DannyExperiments"
+doi: "10.5281/zenodo.24572901"
+version: "1.0.0"
+date-released: "2026-11-27"
+repository-code: "https://github.com/DannyExperiments/pac-bayes-comparator-attainability"
+url: "https://github.com/DannyExperiments/pac-bayes-comparator-attainability/releases/tag/v1.0.0"
+abstract: "A two-sample law forces a positive expected gap for every fixed comparator in the generic PAC-Bayes theorem."
+keywords:
+  - "PAC-Bayes"
+  - "convex comparator"
+  - "binary relative entropy"
+  - "binomial moment"
+  - "generalization bounds"

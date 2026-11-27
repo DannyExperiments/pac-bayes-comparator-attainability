@@ -1,0 +1,3 @@
+# Provenance
+
+This release addresses Q949 in the open problems catalog and Open Problem 1 of Foong, Bruinsma, Burt and Turner. The discovery proof supplied the two-sample law, the moment-budget obstruction, and the Catoni and KL comparisons. The checked release preserves the analytic proof and adds certified finite arithmetic and teaching materials. [Catalog](https://github.com/10m-u/open-problems-catalog/blob/ca8d4d44ba3db527f19f28928c240168f545ecfe/problems/statistics_data_science/bayesian-inference.md#q949) · [Source](https://proceedings.neurips.cc/paper_files/paper/2021/file/214cfbe603b7f9f9bc005d5f53f7a1d3-Paper.pdf#page=10)
